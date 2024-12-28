@@ -1,0 +1,90 @@
+package demo1;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.*;
+
+public class OrangeHRM_project1 {
+	public WebDriver driver;
+
+    @BeforeTest
+    public void setup() throws InterruptedException {
+        driver = new ChromeDriver();
+        // Maximize the window
+        driver.manage().window().maximize();
+        // Launching the URL
+        driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+        Thread.sleep(1000);
+    }
+        
+    @Test (priority=1)
+    public void LoginTest() throws InterruptedException {
+    	// Entering the user name 
+        driver.findElement(By.xpath("//input[contains(@name,'username')]")).sendKeys("Admin");
+        Thread.sleep(1000);
+        // Entering the password
+        driver.findElement(By.xpath("//input[contains(@name,'password')]")).sendKeys("admin123");
+        Thread.sleep(1000);
+        // Clicking on login button
+        driver.findElement(By.xpath("//button[@type='submit']")).click();
+        Thread.sleep(5000);
+    }
+    
+    @Test (priority=2)
+    public void AddEmployeeTest() throws InterruptedException {
+        // Navigate to PIM module
+        driver.findElement(By.xpath("//span[text()='PIM']")).click();
+        Thread.sleep(1000); 
+        // Clicking on add employee
+        driver.findElement(By.linkText("Add Employee")).click();
+        Thread.sleep(1000);
+        // Entering the first name
+        driver.findElement(By.xpath("//input[@name='firstName']")).sendKeys("Rahul");
+        Thread.sleep(1000);
+        // Entering the middle name
+        driver.findElement(By.xpath("//input[@name='middleName']")).sendKeys("M");
+        Thread.sleep(1000);
+        // Entering the last name
+        driver.findElement(By.xpath("//input[@name='lastName']")).sendKeys("Sharma");
+        Thread.sleep(1000);
+        // Clicking on save button
+        driver.findElement(By.xpath("//button[@type='submit']")).click();
+        Thread.sleep(1000);
+    }
+    
+    @Test (priority=3)
+    public void SearchEmployeeTest() throws InterruptedException {
+    	// Clicking on Employee list
+        driver.findElement(By.linkText("Employee List")).click();
+        Thread.sleep(1000);
+        // Entering Employee name
+        driver.findElement(By.xpath("(//input[@placeholder='Type for hints...'])[1]")).sendKeys("Rahul M Sharma");
+        Thread.sleep(1000);
+        // Clicking on search button 
+        driver.findElement(By.xpath("//button[@class='oxd-button oxd-button--medium oxd-button--secondary orangehrm-left-space']")).click();
+        Thread.sleep(1000);
+        // scroll down the window 
+        JavascriptExecutor js=( JavascriptExecutor )driver;
+        js.executeScript("window.scrollBy(0,400);");
+        Thread.sleep(2000);
+        js.executeScript("window.scrollBy(0,-400);");
+        Thread.sleep(5000);
+    }
+    
+     @Test (priority=4)
+     public void logoutTest() throws InterruptedException {
+       driver.findElement(By.xpath("//p[@class='oxd-userdropdown-name']")).click();
+       Thread.sleep(1000);
+       driver.findElement(By.xpath("//a[@href='/web/index.php/auth/logout']")).click();
+       Thread.sleep(4000);
+     }
+     
+     @AfterTest
+     public void tearDown() {
+         if (driver != null) {
+             driver.quit();
+         }
+     }
+}
