@@ -1,0 +1,94 @@
+package demo2;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+public class Amozon_project2 {
+     
+	    public WebDriver driver;
+	    
+	    @BeforeTest
+	    public void setup() throws InterruptedException {
+	    	driver = new ChromeDriver();
+	    	 // Maximize the window
+	    	driver.manage().window().maximize();
+	    	 // Launching the URL
+	    	driver.get("https://www.amazon.in/-/hi/ap/signin?openid.pape.max_auth_age=3600&openid.return_"
+	    			+ "to=https%3A%2F%2Fwww.amazon.in%2Fspr%2Freturns%2Fgift&openid.identity=http%3A%2F%2Fspecs"
+	    			+ ".openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_psr_desktop_in&openid."
+	    			+ "mode=checkid_setup&language=en_IN&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_"
+	    			+ "select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0");
+	    	Thread.sleep(2000);
+	    	
+	    }
+	    
+	    @Test (priority=1)
+	    public void signin() throws InterruptedException {
+	    	driver.findElement(By.xpath("//input[@type='email']")).sendKeys("9353239300");
+	    	Thread.sleep(2000);
+	    	driver.findElement(By.xpath("//input[@id='continue']")).click();
+	    	Thread.sleep(2000);
+	    	driver.findElement(By.xpath("//input[@type='password']")).sendKeys("Demo@123");
+	    	Thread.sleep(2000);
+	    	driver.findElement(By.xpath("//input[@id='signInSubmit']")).click();
+	    	Thread.sleep(2000);
+	    }
+	    
+	    @Test (priority=2)
+	    public void language() throws InterruptedException {
+	    	WebElement En= driver.findElement(By.xpath("//span[@class='icp-nav-link-inner']"));
+	    	Actions act=new Actions (driver);
+	    	act.moveToElement(En).build().perform();
+	    	Thread.sleep(5000);
+	    }
+	    
+	    @Test (priority=3)
+	    public void learnmore() throws InterruptedException {
+	    	driver.findElement(By.xpath("(//div[@class='icp-helplink'])[1]")).click();
+	    	Thread.sleep(3000);
+	    }
+	    
+	    @Test (priority=4)
+	    public void country() throws InterruptedException {
+	    	WebElement En= driver.findElement(By.xpath("//span[@class='icp-nav-link-inner']"));
+	    	Actions act=new Actions (driver);
+	    	act.moveToElement(En).build().perform();
+	    	Thread.sleep(5000);
+	    	driver.findElement(By.xpath("(//div[@class='icp-mkt-change-lnk'])[1]")).click();
+	    	Thread.sleep(2000);
+	    	driver.findElement(By.xpath("//span[@class='a-button-text a-declarative']")).click();
+	    	Thread.sleep(2000);
+	    	driver.findElement(By.xpath("//a[@class='a-dropdown-link a-active']")).click();
+	    	Thread.sleep(2000);
+	    }
+	    
+	    @Test (priority=5)
+	    public void EN() throws InterruptedException {
+	    	driver.findElement(By.xpath("//span[@class='icp-nav-link-inner']")).click();
+	    	Thread.sleep(2000);
+	    }
+	    
+	    @Test (priority=6)
+        public void logout() throws InterruptedException {
+	    	WebElement El= driver.findElement(By.xpath("//a[@class='nav-a nav-a-2 nav-truncate   nav-progressive-attribute']"));
+	    	Actions act=new Actions (driver);
+	    	act.moveToElement(El).build().perform();
+	    	Thread.sleep(3000);
+	    	driver.findElement(By.xpath("(//span[@class='nav-text'])[22]")).click();
+	    	Thread.sleep(3000);
+	    }
+	    
+	    @AfterTest
+	     public void tearDown() {
+	         if (driver != null) {
+	             driver.quit();
+	         }
+	    
+	    } 
+}
